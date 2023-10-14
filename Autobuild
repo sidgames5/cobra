@@ -1,4 +1,4 @@
-#test_command patter test/basic.pts
+#test_command cobra
 
 haxe build.hxml
-sudo cp bin/Main /usr/bin/patter
+sudo cp bin/Main /usr/bin/cobra

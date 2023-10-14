@@ -5,7 +5,7 @@ using StringTools;
 
 class Main {
 	static final version = "0.1.0";
-	static final prompt = 'Patter $version> ';
+	static final prompt = 'Cobra v$version> ';
 
 	static function main() {
 		var file = Sys.args()[0];
