@@ -1,3 +1,4 @@
+import runtime.Interpreter;
 import haxe.io.Bytes;
 import sys.io.File;
 import compiler.Parser;
@@ -22,7 +23,9 @@ class Main {
 			}
 
 			final program = parser.produceAST(input);
-			Sys.println(program);
+
+			final result = Interpreter.evaluate(program);
+			Sys.println(result);
 		}
 	}
 }
