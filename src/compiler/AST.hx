@@ -1,3 +1,5 @@
+package compiler;
+
 enum NodeType {
 	Program;
 	NumericLiteral;

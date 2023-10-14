@@ -1,7 +1,9 @@
-using AST;
-using Token;
+package compiler;
 
-import Lexer.tokenize;
+using compiler.AST;
+using compiler.Token;
+
+import compiler.Lexer.tokenize;
 
 class Parser {
 	public function new() {}

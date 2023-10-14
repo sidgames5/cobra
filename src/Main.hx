@@ -1,5 +1,6 @@
 import haxe.io.Bytes;
 import sys.io.File;
+import compiler.Parser;
 
 using StringTools;
 

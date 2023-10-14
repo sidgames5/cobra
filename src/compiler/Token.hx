@@ -1,3 +1,5 @@
+package compiler;
+
 typedef Token = {
 	value:String,
 	type:TokenType

@@ -1,6 +1,8 @@
-import Token.KEYWORDS;
+package compiler;
 
-using Token;
+import compiler.Token.KEYWORDS;
+
+using compiler.Token;
 
 class Lexer {
 	public static function tokenize(source:String):Array<Token> {
