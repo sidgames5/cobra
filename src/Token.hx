@@ -4,6 +4,8 @@ typedef Token = {
 }
 
 enum TokenType {
+	Null;
+
 	Number;
 	Identifier;
 	Equals;
@@ -16,4 +18,4 @@ enum TokenType {
 	EOF;
 }
 
-final KEYWORDS = ["var" => Var];
+final KEYWORDS = ["var" => Var, "null" => Null];

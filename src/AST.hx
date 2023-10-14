@@ -3,6 +3,7 @@ enum NodeType {
 	NumericLiteral;
 	Identifier;
 	BinaryExpr;
+	NullLiteral;
 }
 
 typedef Statement = {
@@ -34,4 +35,9 @@ typedef Identifier = {
 typedef NumericLiteral = {
 	> Expression,
 	value:Float
+}
+
+typedef NullLiteral = {
+	> Expression,
+	value:String
 }

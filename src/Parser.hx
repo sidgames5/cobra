@@ -103,6 +103,12 @@ class Parser {
 				final value = this.parse_expr();
 				this.eat(CloseBracket);
 				return value;
+			case Null:
+				this.eat();
+				return {
+					kind: NullLiteral,
+					value: "null"
+				};
 			default:
 				Sys.stderr().writeString('Unexpected token: $tk\n');
 				Sys.exit(1);
