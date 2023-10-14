@@ -1,0 +1,10 @@
+using "std.pts"
+
+:int main (str[] args) {
+    println("Hello world!")
+    %fs.write("Hello world!", "~/hello.txt")
+    println("Hello world again!")
+    final int exitCode = 0
+    uint16 number = 5
+    return exitCode
+}

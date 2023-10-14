@@ -1,0 +1,4 @@
+#test_command patter test/basic.pts
+
+haxe build.hxml
+sudo cp bin/Main /usr/bin/patter
