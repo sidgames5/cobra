@@ -11,7 +11,6 @@ class Lexer {
 		var src = source.split("");
 
 		while (src.length > 0) {
-			Sys.print(src[0]);
 			if (src[0] == "(")
 				tokens.push(token(src.shift(), OpenBracket));
 			else if (src[0] == ")")
@@ -52,7 +51,6 @@ class Lexer {
 		}
 
 		tokens.push(token("EndOfFile", EOF));
-		Sys.println("");
 		return tokens;
 	}
 

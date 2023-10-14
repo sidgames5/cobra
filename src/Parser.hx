@@ -43,7 +43,24 @@ class Parser {
 	}
 
 	private function parse_expr():Expression {
-		return this.parse_primary_expr();
+		return this.parse_additive_expr();
+	}
+
+	private function parse_additive_expr():Dynamic {
+		var left = this.parse_primary_expr();
+
+		while (this.at().value == "+" || this.at().value == "-") {
+			final op = this.eat().value;
+			final right = this.parse_primary_expr();
+			left = cast {
+				kind: BinaryExpr,
+				left: left,
+				right: right,
+				op: op
+			};
+		}
+
+		return left;
 	}
 
 	private function parse_primary_expr():Dynamic {
