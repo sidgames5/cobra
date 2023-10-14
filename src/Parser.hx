@@ -27,8 +27,12 @@ class Parser {
 		return this.tokens[0];
 	}
 
-	private function eat() {
+	private function eat(?rt:TokenType = null, ?msg:String = "Missing") {
 		final prev = this.tokens.shift();
+		if (rt != null && prev.type != rt) {
+			Sys.stderr().writeString('Error: expected $rt, got ${prev.type}\n');
+			Sys.exit(1);
+		}
 		return prev;
 	}
 
@@ -94,6 +98,11 @@ class Parser {
 					kind: NumericLiteral,
 					value: Std.parseFloat(this.eat().value)
 				};
+			case OpenBracket:
+				this.eat();
+				final value = this.parse_expr();
+				this.eat(CloseBracket);
+				return value;
 			default:
 				Sys.stderr().writeString('Unexpected token: $tk\n');
 				Sys.exit(1);
