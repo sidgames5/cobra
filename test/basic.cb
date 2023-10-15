@@ -1,1 +1,3 @@
-x / 10
+var x = 1
+final y = 5
+x + 2 + y

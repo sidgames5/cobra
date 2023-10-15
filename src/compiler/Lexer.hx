@@ -23,6 +23,8 @@ class Lexer {
 				tokens.push(token(src.shift(), BinOp));
 			else if (src[0] == "=")
 				tokens.push(token(src.shift(), Equals));
+			else if (src[0] == ";")
+				tokens.push(token(src.shift(), Semicolon));
 			else {
 				// Handle multi-char tokens
 

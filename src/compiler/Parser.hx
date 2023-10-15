@@ -45,7 +45,48 @@ class Parser {
 	private function parse_stmt():Statement {
 		// skip to parse_expr
 
-		return this.parse_expr();
+		switch (this.at().type) {
+			case TokenType.Var:
+				return this.parse_var_declaration();
+			case TokenType.Final:
+				return this.parse_var_declaration();
+
+			default:
+				return this.parse_expr();
+		}
+	}
+
+	// var ident;
+	// ( var | final ) ident = expr;
+	private function parse_var_declaration():Statement {
+		final isConstant = this.eat().type == TokenType.Final;
+		final identifier = this.eat(TokenType.Identifier).value;
+
+		if (this.at().type == TokenType.Semicolon) {
+			this.eat();
+			if (isConstant) {
+				Sys.stderr().writeString("Error: final variable must be initialized");
+				Sys.exit(1);
+				return null;
+			}
+
+			var r:VarDeclaration = {
+				kind: VarDeclaration,
+				key: identifier,
+				constant: false
+			};
+			return r;
+		}
+
+		this.eat(TokenType.Equals);
+		final declaration:VarDeclaration = {
+			kind: VarDeclaration,
+			value: this.parse_expr(),
+			key: identifier,
+			constant: isConstant
+		};
+
+		return declaration;
 	}
 
 	private function parse_expr():Expression {
@@ -105,12 +146,6 @@ class Parser {
 				final value = this.parse_expr();
 				this.eat(CloseBracket);
 				return value;
-			case Null:
-				this.eat();
-				return {
-					kind: NullLiteral,
-					value: "null"
-				};
 			default:
 				Sys.stderr().writeString('Unexpected token: $tk\n');
 				Sys.exit(1);

@@ -1,11 +1,14 @@
 package compiler;
 
 enum NodeType {
+	// Statements
 	Program;
+	VarDeclaration;
+
+	// Expressions
 	NumericLiteral;
 	Identifier;
 	BinaryExpr;
-	NullLiteral;
 }
 
 typedef Statement = {
@@ -16,6 +19,14 @@ typedef Program = {
 	> Statement,
 	kind:NodeType,
 	body:Array<Statement>
+}
+
+typedef VarDeclaration = {
+	> Statement,
+	kind:NodeType,
+	constant:Bool,
+	key:String,
+	?value:Expression
 }
 
 typedef Expression = {
@@ -37,9 +48,4 @@ typedef Identifier = {
 typedef NumericLiteral = {
 	> Expression,
 	value:Float
-}
-
-typedef NullLiteral = {
-	> Expression,
-	value:String
 }

@@ -3,6 +3,7 @@ package runtime;
 enum ValueType {
 	Null;
 	Number;
+	Bool;
 }
 
 typedef RuntimeVal = {
@@ -12,6 +13,11 @@ typedef RuntimeVal = {
 typedef NullVal = {
 	> RuntimeVal,
 	value:String
+}
+
+typedef BoolVal = {
+	> RuntimeVal,
+	value:Bool
 }
 
 typedef NumberVal = {

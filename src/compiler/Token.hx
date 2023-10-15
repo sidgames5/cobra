@@ -6,18 +6,23 @@ typedef Token = {
 }
 
 enum TokenType {
-	Null;
-
+	// Literal types
 	Number;
 	Identifier;
-	Equals;
+
+	// Keywords
 	Var;
+	Final;
+
+	// Grouping, Operators
+	Equals;
 	OpenBracket;
 	CloseBracket;
-
 	BinOp;
+	Semicolon;
 
+	// End of file
 	EOF;
 }
 
-final KEYWORDS = ["var" => Var, "null" => Null];
+final KEYWORDS = ["var" => Var, "final" => Final];

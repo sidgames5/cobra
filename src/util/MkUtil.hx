@@ -1,5 +1,6 @@
 package util;
 
+import runtime.Values.BoolVal;
 import runtime.Values.NullVal;
 import runtime.Values.NumberVal;
 
@@ -11,4 +12,8 @@ function mkNumber(n:Float = 0):NumberVal {
 
 function mkNull():NullVal {
 	return {type: Null, value: null};
+}
+
+function mkBool(v:Bool = false):BoolVal {
+	return {type: Bool, value: v};
 }

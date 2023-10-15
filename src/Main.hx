@@ -1,3 +1,5 @@
+import util.MkUtil.mkBool;
+import util.MkUtil.mkNull;
 import util.MkUtil.mkNumber;
 import runtime.Values.ValueType;
 import runtime.Environment;
@@ -21,6 +23,9 @@ class Main {
 		var si = 0;
 
 		env.declareVar("x", mkNumber(10));
+		env.declareVar("true", mkBool(true));
+		env.declareVar("false", mkBool(false));
+		env.declareVar("null", mkNull());
 
 		for (arg in args) {
 			if (arg.startsWith("-")) {
