@@ -1,4 +1,4 @@
-#test_command cobra test/basic.cb basic.cbo
+#test_command cobra
 
 haxe build.hxml
 sudo cp bin/Main /usr/bin/cobra

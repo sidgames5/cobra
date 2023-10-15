@@ -22,7 +22,6 @@ class Main {
 		var options = [];
 		var si = 0;
 
-		env.declareVar("x", mkNumber(10));
 		env.declareVar("true", mkBool(true));
 		env.declareVar("false", mkBool(false));
 		env.declareVar("null", mkNull());

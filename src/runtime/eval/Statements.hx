@@ -18,6 +18,11 @@ function eval_program(program:Program, env:Environment):RuntimeVal {
 }
 
 function eval_var_declaration(declaration:VarDeclaration, env:Environment):RuntimeVal {
-	// env.declareVar(declaration.key, declaration.value);
-	throw new NotImplementedException();
+	var value:Dynamic;
+	if (declaration.value == null)
+		value = mkNull();
+	else
+		value = evaluate(declaration.value, env);
+
+	return env.declareVar(declaration.key, value);
 }
