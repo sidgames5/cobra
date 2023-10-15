@@ -1,21 +1,26 @@
 package runtime;
 
+import util.MkUtil.mkNumber;
+import util.MkUtil.mkNull;
 import haxe.exceptions.NotImplementedException;
 
 using runtime.Values;
 using compiler.AST;
 
 class Interpreter {
-	public static function evaluate(astNode:Dynamic):RuntimeVal {
+	public static function evaluate(astNode:Statement, env:Environment):RuntimeVal {
 		switch (astNode.kind) {
 			case NumericLiteral:
-				return cast {type: Number, value: astNode.value};
+				final nl:NumericLiteral = cast astNode;
+				return mkNumber(nl.value);
 			case NullLiteral:
-				return cast {type: Null, value: "null"};
+				return mkNull();
+			case Identifier:
+				return eval_identifier(cast astNode, env);
 			case BinaryExpr:
-				return eval_binary_expr(astNode);
+				return eval_binary_expr(cast astNode, env);
 			case Program:
-				return eval_program(astNode);
+				return eval_program(cast astNode, env);
 			default:
 				throw new NotImplementedException('Node not implemented: ${astNode.kind}\n');
 				Sys.exit(1);
@@ -23,14 +28,19 @@ class Interpreter {
 		}
 	}
 
-	private static function eval_binary_expr(binop:BinaryExpr):RuntimeVal {
-		final lhs = evaluate(binop.left);
-		final rhs = evaluate(binop.right);
+	private static function eval_identifier(ident:Identifier, env:Environment):RuntimeVal {
+		final val = env.lookupVar(ident.symbol);
+		return val;
+	}
+
+	private static function eval_binary_expr(binop:BinaryExpr, env:Environment):RuntimeVal {
+		final lhs = evaluate(binop.left, env);
+		final rhs = evaluate(binop.right, env);
 
 		if (lhs.type == Number && rhs.type == Number) {
 			return eval_numeric_binary_expr(cast lhs, cast rhs, binop.op);
 		} else {
-			return cast {type: "null", value: "null"};
+			return mkNull();
 		}
 	}
 
@@ -52,14 +62,11 @@ class Interpreter {
 		return {type: Number, value: result};
 	}
 
-	private static function eval_program(program:Program):RuntimeVal {
-		var lastEvaluated:RuntimeVal = cast {
-			type: "null",
-			value: "null"
-		};
+	private static function eval_program(program:Program, env:Environment):RuntimeVal {
+		var lastEvaluated:RuntimeVal = mkNull();
 
 		for (stmt in program.body) {
-			lastEvaluated = evaluate(stmt);
+			lastEvaluated = evaluate(stmt, env);
 		}
 
 		return lastEvaluated;

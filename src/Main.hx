@@ -1,3 +1,6 @@
+import util.MkUtil.mkNumber;
+import runtime.Values.ValueType;
+import runtime.Environment;
 import runtime.Interpreter;
 import haxe.io.Bytes;
 import sys.io.File;
@@ -11,9 +14,13 @@ class Main {
 
 	static final args = Sys.args();
 
+	static final env = new Environment();
+
 	static function main() {
 		var options = [];
 		var si = 0;
+
+		env.declareVar("x", mkNumber(10));
 
 		for (arg in args) {
 			if (arg.startsWith("-")) {
@@ -31,13 +38,27 @@ class Main {
 		var ip = args[si];
 		var op = args[si + 1];
 
-		var src = File.getContent(ip);
+		if (args.length < 1) {
+			while (true) {
+				Sys.print(prompt);
+				var src = Sys.stdin().readLine();
 
-		final parser = new Parser();
+				final parser = new Parser();
 
-		final program = parser.produceAST(src);
+				final program = parser.produceAST(src);
 
-		final result = Interpreter.evaluate(program);
-		Sys.println(result);
+				final result = Interpreter.evaluate(program, env);
+				Sys.println(result);
+			}
+		} else {
+			var src = File.getContent(ip);
+
+			final parser = new Parser();
+
+			final program = parser.produceAST(src);
+
+			final result = Interpreter.evaluate(program, env);
+			Sys.println(result);
+		}
 	}
 }
